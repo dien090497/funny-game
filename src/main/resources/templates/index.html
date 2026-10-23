@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101626">
+  <meta name="description" content="Bốn mini game chơi trực tiếp trên trình duyệt.">
+  <title>Mini Game Hub</title>
+  <link rel="stylesheet" th:href="@{/css/hub.css}">
+</head>
+<body>
+  <main class="container">
+    <header class="top">
+      <a class="brand" th:href="@{/}"><span class="brand-icon">✳</span> PLAYROOM <span class="brand-sub">/ MINI GAME</span></a>
+      <span class="count">04 TRÒ CHƠI · CHỌN VÀ CHƠI</span>
+    </header>
+    <section class="hero">
+      <span class="eyebrow">MỘT GÓC GIẢI TRÍ</span>
+      <h1>Chọn game.<br><em>Bắt đầu chơi.</em></h1>
+      <p>Bốn trò chơi trong cùng một bộ source. Chọn một trò bên dưới để mở giao diện chơi của trò đó.</p>
+    </section>
+    <section class="library" aria-labelledby="list-title">
+      <div class="section-heading"><h2 id="list-title">Danh sách game</h2><span>01 — 04</span></div>
+      <div class="cards">
+        <a class="card memory" th:href="@{/games/memory}">
+          <div class="art" aria-hidden="true"><span>✦</span><span>◈</span><span>✳</span><span>◈</span></div>
+          <div class="info">
+            <div class="tag">TRÍ NHỚ · 6–12 CẶP</div>
+            <h3>Lật thẻ tìm cặp</h3>
+            <p>Ghi nhớ vị trí, ghép đủ cặp và vượt kỷ lục của bạn.</p>
+            <span class="play">Chơi ngay <b>↗</b></span>
+          </div>
+        </a>
+        <a class="card puzzle" th:href="@{/games/2048}">
+          <div class="art" aria-hidden="true"><span>2</span><span>4</span><span>8</span><span>16</span></div>
+          <div class="info">
+            <div class="tag">CHIẾN THUẬT · GHÉP SỐ</div>
+            <h3>2048</h3>
+            <p>Ghép những ô cùng số, tính từng nước đi để đạt 2048.</p>
+            <span class="play">Chơi ngay <b>↗</b></span>
+          </div>
+        </a>
+        <a class="card snake" th:href="@{/games/snake}">
+          <div class="art" aria-hidden="true"><span>●</span><span>●</span><span>●</span><span>◆</span></div>
+          <div class="info">
+            <div class="tag">PHẢN XẠ · KINH ĐIỂN</div>
+            <h3>Rắn săn mồi</h3>
+            <p>Ăn mồi, lớn dần và tránh va vào tường hoặc chính mình.</p>
+            <span class="play">Chơi ngay <b>↗</b></span>
+          </div>
+        </a>
+        <a class="card arena" th:href="@{/games/arena}">
+          <div class="art" aria-hidden="true"><span>✧</span><span>✳</span><span>✧</span><span>✶</span></div>
+          <div class="info">
+            <div class="tag">HÀNH ĐỘNG · SINH TỒN</div>
+            <h3>Đấu trường sinh tồn</h3>
+            <p>Né quái, lên cấp, chọn nâng cấp và sống sót 3 phút.</p>
+            <span class="play">Chơi ngay <b>↗</b></span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <footer>Tiến trình và kỷ lục được từng game lưu trên trình duyệt bằng localStorage.</footer>
+  </main>
+</body>
+</html>

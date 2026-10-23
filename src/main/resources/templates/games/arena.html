@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101624">
+  <meta name="description" content="Đấu trường sinh tồn: né quái, tự động tấn công, lên cấp và sống sót 3 phút.">
+  <title>Đấu trường sinh tồn — 3 phút sống sót</title>
+  <link rel="stylesheet" th:href="@{/css/arena.css}">
+  <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+</head>
+<body>
+  <nav class="game-hub-nav" aria-label="Điều hướng game">
+    <a th:href="@{/}">← Tất cả game</a>
+    <span>Đấu trường sinh tồn</span>
+  </nav>
+  <main class="app">
+    <header class="top">
+      <div class="logo">
+        <span class="logo-mark">✳</span>
+        <span>LAST LIGHT<span class="slash"> / </span>ARENA</span>
+      </div>
+      <span class="top-right">MỘT NGƯỜI CHƠI · 03 PHÚT</span>
+    </header>
+    <div class="layout">
+      <section class="intro" aria-label="Thông tin trò chơi">
+        <div class="tag"><i></i> MINI GAME SINH TỒN</div>
+        <h1>Đứng vững.<br><em>Lên cấp.</em><br>Sống sót.</h1>
+        <p>Di chuyển qua bầy quái, thu thập tinh thể kinh nghiệm và xây dựng bộ vũ khí của bạn. Sống sót đủ 3 phút để chiến thắng.</p>
+        <div class="stat-grid">
+          <div><span>KỶ LỤC HẠ GỤC</span><strong id="best-kills">0</strong></div>
+          <div><span>THỜI GIAN TỐT NHẤT</span><strong id="best-time">00:00</strong></div>
+        </div>
+        <div class="guide">
+          <div class="guide-symbol">⌁</div>
+          <div>
+            <b>Di chuyển để sống sót</b>
+            <span>WASD, phím mũi tên hoặc cần điều khiển trên màn hình. Vũ khí tự nhắm và tấn công.</span>
+          </div>
+        </div>
+        <div class="guide">
+          <div class="guide-symbol">✦</div>
+          <div>
+            <b>Chọn cách mạnh lên</b>
+            <span>Mỗi lần lên cấp, chọn một nâng cấp. Mở khóa thêm Lưỡi xoay và Xung điện.</span>
+          </div>
+        </div>
+        <div class="footnote">Tiến trình ván chơi và kỷ lục được lưu bằng localStorage.</div>
+      </section>
+      <section class="game" aria-label="Bàn chơi">
+        <div class="game-head">
+          <div>
+            <div class="overline">ĐẤU TRƯỜNG 01</div>
+            <h2>Giữ lấy ánh sáng.</h2>
+          </div>
+          <div class="head-actions">
+            <button id="pause" type="button" title="Tạm dừng hoặc tiếp tục (P)">Ⅱ <span>Tạm dừng</span></button>
+            <button id="restart" type="button" title="Bắt đầu ván mới">↻</button>
+          </div>
+        </div>
+        <div class="hud">
+          <div class="hud-item"><span>THỜI GIAN</span><strong id="timer">00:00 <small>/ 03:00</small></strong></div>
+          <div class="hud-item"><span>HẠ GỤC</span><strong id="kills">0</strong></div>
+          <div class="hud-item"><span>CẤP ĐỘ</span><strong id="level">1</strong></div>
+          <div class="hud-item health"><span>SINH LỰC</span><strong id="health">♥ ♥ ♥ ♥ ♥</strong></div>
+        </div>
+        <div class="stage" id="stage">
+          <canvas id="canvas" width="960" height="600" aria-label="Đấu trường sinh tồn. Dùng phím hoặc cần điều khiển để di chuyển."></canvas>
+          <div class="xp">
+            <span id="xp-label">CẤP 1</span>
+            <div class="xp-track"><div id="xp-fill"></div></div>
+            <span id="xp-count">0 / 5 XP</span>
+          </div>
+          <div class="joystick" id="joystick" aria-label="Cần điều khiển cảm ứng">
+            <div class="joystick-knob" id="joystick-knob"></div>
+          </div>
+          <div class="screen" id="screen">
+            <div class="screen-content" id="screen-content"></div>
+          </div>
+        </div>
+        <div class="under">
+          <span><i></i> <span id="status" role="status" aria-live="polite">Sẵn sàng vào đấu trường</span></span>
+          <span>WASD / PHÍM MŨI TÊN / CẢM ỨNG</span>
+        </div>
+      </section>
+    </div>
+    <footer>LAST LIGHT / ARENA <span>✳</span> MỖI VÁN LÀ MỘT CÁCH SỐNG SÓT</footer>
+  </main>
+  <script th:src="@{/js/arena.js}" defer></script>
+</body>
+</html>

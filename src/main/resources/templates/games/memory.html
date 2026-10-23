@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11162b">
+  <meta name="description" content="Game lật thẻ tìm cặp: rèn trí nhớ, chinh phục kỷ lục của chính bạn.">
+  <title>Lật thẻ tìm cặp — Memory Garden</title>
+  <link rel="stylesheet" th:href="@{/css/memory.css}">
+  <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+</head>
+<body>
+  <nav class="game-hub-nav" aria-label="Điều hướng game">
+    <a th:href="@{/}">← Tất cả game</a>
+    <span>Lật thẻ tìm cặp</span>
+  </nav>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">✦</span><span>Memory Garden</span></div>
+      <div class="top-note">Một khoảng nghỉ nhỏ cho trí nhớ của bạn ✳</div>
+    </header>
+    <div class="layout">
+      <section class="intro" aria-label="Thông tin trò chơi">
+        <div class="eyebrow">Mini game trí nhớ</div>
+        <h1>Lật thẻ.<br><em>Tìm cặp.</em><br>Thắng cuộc.</h1>
+        <p>Lật hai thẻ mỗi lượt và ghi nhớ vị trí của chúng. Tìm hết các cặp để hoàn thành bàn chơi với ít lượt nhất.</p>
+        <div class="sidebar-bottom">
+          <div class="panel">
+            <div class="panel-title">Chọn độ khó</div>
+            <div class="levels" role="group" aria-label="Độ khó">
+              <button class="level" data-level="easy" type="button">Dễ<small>6 cặp</small></button>
+              <button class="level" data-level="medium" type="button">Vừa<small>8 cặp</small></button>
+              <button class="level" data-level="hard" type="button">Khó<small>12 cặp</small></button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Kỷ lục của bạn</div>
+            <div class="record">
+              <div class="record-icon" aria-hidden="true">🏆</div>
+              <div class="record-copy">
+                <strong id="best">Chưa có</strong>
+                <span id="best-detail">Hoàn thành ván đầu tiên để lập kỷ lục</span>
+              </div>
+            </div>
+          </div>
+          <div class="tip">✦ Kỷ lục được lưu trên trình duyệt này. Xóa dữ liệu trình duyệt sẽ xóa kỷ lục.</div>
+        </div>
+      </section>
+      <section class="game" aria-label="Bàn chơi">
+        <div class="game-head">
+          <div>
+            <h2 id="game-title">Bàn chơi · Vừa</h2>
+            <p id="status" aria-live="polite">Chọn một thẻ để bắt đầu!</p>
+          </div>
+          <button class="reset" id="reset" type="button">↻ &nbsp;Chơi lại</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Thời gian</div><div class="stat-value" id="time">00:00</div></div>
+          <div class="stat"><div class="stat-label">Lượt lật</div><div class="stat-value" id="moves">0</div></div>
+          <div class="stat"><div class="stat-label">Đã ghép</div><div class="stat-value" id="pairs">0/8</div></div>
+        </div>
+        <div class="board-wrap"><div class="board" id="board" aria-label="Các thẻ úp"></div></div>
+        <div class="footerline">Lật thẻ bằng chuột hoặc phím <b>Tab + Enter</b></div>
+      </section>
+    </div>
+  </main>
+  <div class="dialog-backdrop" id="victory" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+      <div class="dialog-art" aria-hidden="true">🎉</div>
+      <h2 id="victory-title">Bạn đã thắng!</h2>
+      <p id="victory-message"></p>
+      <button id="play-again" type="button">Chơi ván mới →</button>
+    </div>
+  </div>
+  <script th:src="@{/js/memory.js}" defer></script>
+</body>
+</html>

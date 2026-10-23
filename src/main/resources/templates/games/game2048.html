@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ef">
+  <meta name="description" content="Chơi 2048 trên trình duyệt. Ghép các ô số, chinh phục 2048 và lưu tiến trình trên thiết bị.">
+  <title>2048 — Ghép số, phá kỷ lục</title>
+  <link rel="stylesheet" th:href="@{/css/game2048.css}">
+  <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+</head>
+<body>
+  <nav class="game-hub-nav" aria-label="Điều hướng game">
+    <a th:href="@{/}">← Tất cả game</a>
+    <span>2048</span>
+  </nav>
+  <main class="app">
+    <header class="masthead">
+      <a class="logo" href="#game" aria-label="2048, tới bàn chơi">20<span>48</span><i aria-hidden="true">✳</i></a>
+      <span class="edition">MỘT TRÒ CHƠI GHÉP SỐ</span>
+    </header>
+    <div class="columns">
+      <section class="intro" aria-label="Giới thiệu trò chơi">
+        <div class="badge"><span class="badge-dot"></span> GAME GIẢI TRÍ</div>
+        <h1>Thêm một lượt.<br><em>Thêm một ô.</em><br>Đến <span>2048.</span></h1>
+        <p>Vuốt để di chuyển các ô. Hai ô có cùng giá trị sẽ hợp nhất thành một ô lớn hơn. Bạn có thể đi được bao xa?</p>
+        <div class="guide">
+          <div class="guide-icon" aria-hidden="true">⌘</div>
+          <div>
+            <strong>Cách chơi</strong>
+            <span>Dùng các phím mũi tên, WASD hoặc vuốt trên màn hình. Mỗi lượt hợp lệ xuất hiện thêm một ô mới.</span>
+          </div>
+        </div>
+        <div class="side-note">✦ Ván chơi và điểm cao được lưu tự động trên trình duyệt này.</div>
+      </section>
+      <section class="game" id="game" aria-label="Trò chơi 2048">
+        <div class="game-top">
+          <div>
+            <div class="section-label">BÀN CHƠI CỦA BẠN</div>
+            <h2>Hãy ghép các ô.</h2>
+          </div>
+          <div class="scores">
+            <div class="score-box"><span>ĐIỂM</span><strong id="score">0</strong></div>
+            <div class="score-box best"><span>CAO NHẤT</span><strong id="best">0</strong></div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <span id="status" role="status" aria-live="polite">Chọn hướng di chuyển để bắt đầu</span>
+          <div class="actions">
+            <button type="button" id="undo" title="Hoàn tác một lượt (U)" aria-label="Hoàn tác một lượt">↶ <span>Hoàn tác</span></button>
+            <button type="button" id="restart" class="primary">↻ <span>Chơi mới</span></button>
+          </div>
+        </div>
+        <div class="board-frame">
+          <div class="board" id="board" role="grid" aria-label="Bàn 2048 gồm 4 hàng và 4 cột"></div>
+        </div>
+        <div class="controls">
+          <span>Điều khiển</span>
+          <div class="direction-pad" aria-label="Nút điều khiển">
+            <button type="button" data-direction="up" aria-label="Di chuyển lên">↑</button>
+            <div>
+              <button type="button" data-direction="left" aria-label="Di chuyển trái">←</button>
+              <button type="button" data-direction="down" aria-label="Di chuyển xuống">↓</button>
+              <button type="button" data-direction="right" aria-label="Di chuyển phải">→</button>
+            </div>
+          </div>
+          <span class="hint">Mũi tên · WASD · Vuốt</span>
+        </div>
+      </section>
+    </div>
+    <footer>2048 <span>·</span> Cứ chơi theo nhịp của bạn</footer>
+  </main>
+  <div class="modal-backdrop" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-icon" id="modal-icon" aria-hidden="true"></div>
+      <h2 id="modal-title"></h2>
+      <p id="modal-text"></p>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+  <script th:src="@{/js/game2048.js}" defer></script>
+</body>
+</html>

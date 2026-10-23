@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1420">
+  <meta name="description" content="Rắn săn mồi: ăn mồi, tăng điểm và vượt qua kỷ lục của chính bạn.">
+  <title>Rắn săn mồi — Snake Arcade</title>
+  <link rel="stylesheet" th:href="@{/css/snake.css}">
+  <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+</head>
+<body>
+  <nav class="game-hub-nav" aria-label="Điều hướng game">
+    <a th:href="@{/}">← Tất cả game</a>
+    <span>Rắn săn mồi</span>
+  </nav>
+  <main class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">S</span>
+        <span>SNAKE<span class="accent">/</span>ARCADE</span>
+      </div>
+      <div class="header-right"><span class="live-dot"></span> TRÒ CHƠI TRÍ NHỚ PHẢN XẠ</div>
+    </header>
+    <div class="layout">
+      <section class="intro" aria-label="Giới thiệu trò chơi">
+        <div class="eyebrow">01 / GAME KINH ĐIỂN</div>
+        <h1>Rắn<br><em>săn mồi</em><span class="period">.</span></h1>
+        <p>Dẫn đường cho chú rắn, ăn những quả mọng và lớn dần. Một cú chạm tường hoặc chính mình sẽ kết thúc ván chơi.</p>
+        <div class="score-card">
+          <div><span>ĐIỂM HIỆN TẠI</span><strong id="score">00</strong></div>
+          <div class="score-divider"></div>
+          <div><span>KỶ LỤC</span><strong id="best">00</strong></div>
+        </div>
+        <div class="settings">
+          <div class="settings-label">CHỌN TỐC ĐỘ <span>↘</span></div>
+          <div class="speed-options" role="group" aria-label="Tốc độ trò chơi">
+            <button type="button" data-speed="slow">Thư giãn</button>
+            <button type="button" data-speed="normal">Tiêu chuẩn</button>
+            <button type="button" data-speed="fast">Tốc độ</button>
+          </div>
+        </div>
+        <div class="tips">
+          <div class="tip-icon" aria-hidden="true">⌨</div>
+          <div>
+            <strong>Cách điều khiển</strong>
+            <span>Dùng phím mũi tên, WASD, vuốt trên bàn chơi hoặc các nút hướng bên dưới.</span>
+          </div>
+        </div>
+        <div class="save-note">✳ &nbsp; Ván chơi và kỷ lục được lưu trên trình duyệt này.</div>
+      </section>
+      <section class="game" aria-label="Bàn chơi Rắn săn mồi">
+        <div class="game-heading">
+          <div>
+            <div class="small-label">SẴN SÀNG CHƠI?</div>
+            <h2>Vào bàn chơi.</h2>
+          </div>
+          <div class="game-actions">
+            <button type="button" id="pause" aria-label="Bắt đầu hoặc tạm dừng">Bắt đầu</button>
+            <button type="button" id="restart" title="Tạo ván mới" aria-label="Tạo ván mới">↻</button>
+          </div>
+        </div>
+        <div class="board-shell">
+          <div class="board-topline">
+            <span><i></i> <span id="state-label">CHƯA BẮT ĐẦU</span></span>
+            <span id="length-label">ĐỘ DÀI 03</span>
+          </div>
+          <div class="board-stage">
+            <canvas id="board" width="600" height="600" aria-label="Bàn chơi 20 nhân 20 ô. Điều khiển rắn bằng phím hoặc nút hướng."></canvas>
+            <div class="overlay" id="overlay">
+              <div class="overlay-content">
+                <div class="overlay-symbol" id="overlay-symbol" aria-hidden="true">✳</div>
+                <h3 id="overlay-title">Sẵn sàng săn mồi?</h3>
+                <p id="overlay-message">Ăn mồi để tăng điểm. Tránh tường và đuôi của chính mình.</p>
+                <button type="button" id="overlay-button">Bắt đầu chơi <span>→</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="board-bottomline">
+            <span>● <span id="status-text" role="status" aria-live="polite">Chọn Bắt đầu để vào game</span></span>
+            <span>20 × 20</span>
+          </div>
+        </div>
+        <div class="underboard">
+          <span>DI CHUYỂN</span>
+          <div class="direction-pad" role="group" aria-label="Điều khiển hướng">
+            <button type="button" data-dir="up" aria-label="Lên">↑</button>
+            <div>
+              <button type="button" data-dir="left" aria-label="Trái">←</button>
+              <button type="button" data-dir="down" aria-label="Xuống">↓</button>
+              <button type="button" data-dir="right" aria-label="Phải">→</button>
+            </div>
+          </div>
+          <span class="keyboard-hint">Phím cách để tạm dừng</span>
+        </div>
+      </section>
+    </div>
+    <footer><span>SNAKE / ARCADE</span><span>ĂN · LỚN · LẶP LẠI</span></footer>
+  </main>
+  <script th:src="@{/js/snake.js}" defer></script>
+</body>
+</html>
