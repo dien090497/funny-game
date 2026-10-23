@@ -8,6 +8,7 @@
   <title>Rắn săn mồi — Snake Arcade</title>
   <link rel="stylesheet" th:href="@{/css/snake.css}">
   <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+  <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
 </head>
 <body>
   <nav class="game-hub-nav" aria-label="Điều hướng game">
@@ -48,6 +49,10 @@
           </div>
         </div>
         <div class="save-note">✳ &nbsp; Ván chơi và kỷ lục được lưu trên trình duyệt này.</div>
+        <div class="lb-section">
+          <h3>🏆 Bảng xếp hạng</h3>
+          <div id="lb-container"></div>
+        </div>
       </section>
       <section class="game" aria-label="Bàn chơi Rắn săn mồi">
         <div class="game-heading">
@@ -97,6 +102,7 @@
     </div>
     <footer><span>SNAKE / ARCADE</span><span>ĂN · LỚN · LẶP LẠI</span></footer>
   </main>
+  <script th:src="@{/js/leaderboard.js}" defer></script>
   <script th:src="@{/js/snake.js}" defer></script>
 </body>
 </html>

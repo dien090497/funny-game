@@ -8,6 +8,7 @@
   <title>Lật thẻ tìm cặp — Memory Garden</title>
   <link rel="stylesheet" th:href="@{/css/memory.css}">
   <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+  <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
 </head>
 <body>
   <nav class="game-hub-nav" aria-label="Điều hướng game">
@@ -44,6 +45,10 @@
             </div>
           </div>
           <div class="tip">✦ Kỷ lục được lưu trên trình duyệt này. Xóa dữ liệu trình duyệt sẽ xóa kỷ lục.</div>
+          <div class="lb-section">
+            <h3>🏆 Bảng xếp hạng</h3>
+            <div id="lb-container"></div>
+          </div>
         </div>
       </section>
       <section class="game" aria-label="Bàn chơi">
@@ -72,6 +77,7 @@
       <button id="play-again" type="button">Chơi ván mới →</button>
     </div>
   </div>
+  <script th:src="@{/js/leaderboard.js}" defer></script>
   <script th:src="@{/js/memory.js}" defer></script>
 </body>
 </html>

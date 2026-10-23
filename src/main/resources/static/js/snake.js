@@ -110,6 +110,13 @@
     state = finalState;
     update();
     save();
+    if (finalState === 'over' || finalState === 'won') {
+      Leaderboard.promptAndSubmit({
+        game: 'snake',
+        score,
+        onDone: () => Leaderboard.load('snake', document.getElementById('lb-container')),
+      });
+    }
   }
 
   function tick() {
@@ -241,4 +248,5 @@
 
   if (load()) { update(); save(); }
   else reset();
+  Leaderboard.load('snake', document.getElementById('lb-container'));
 })();

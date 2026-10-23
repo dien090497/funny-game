@@ -8,6 +8,7 @@
   <title>Đấu trường sinh tồn — 3 phút sống sót</title>
   <link rel="stylesheet" th:href="@{/css/arena.css}">
   <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+  <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
 </head>
 <body>
   <nav class="game-hub-nav" aria-label="Điều hướng game">
@@ -46,6 +47,10 @@
           </div>
         </div>
         <div class="footnote">Tiến trình ván chơi và kỷ lục được lưu bằng localStorage.</div>
+        <div class="lb-section">
+          <h3>🏆 Bảng xếp hạng</h3>
+          <div id="lb-container"></div>
+        </div>
       </section>
       <section class="game" aria-label="Bàn chơi">
         <div class="game-head">
@@ -86,6 +91,7 @@
     </div>
     <footer>LAST LIGHT / ARENA <span>✳</span> MỖI VÁN LÀ MỘT CÁCH SỐNG SÓT</footer>
   </main>
+  <script th:src="@{/js/leaderboard.js}" defer></script>
   <script th:src="@{/js/arena.js}" defer></script>
 </body>
 </html>

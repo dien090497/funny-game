@@ -48,6 +48,14 @@
         lastFocus=document.activeElement;
         $('victory-message').innerHTML=`Hoàn thành trong <strong>${moves} lượt</strong> và <strong>${format(elapsed)}</strong>. ${isBest?'Kỷ lục mới!':'Thử thêm một ván để vượt kỷ lục nhé.'}`;
         $('victory').hidden=false; $('play-again').focus();
+        // score = số lượt đảo ngược để dễ so sánh (ít lượt hơn = tốt hơn → dùng 10000 - moves)
+        const leaderboardScore = Math.max(0, 10000 - moves * 10 - elapsed);
+        Leaderboard.promptAndSubmit({
+          game: 'memory',
+          score: leaderboardScore,
+          extra: `moves=${moves},time=${elapsed},difficulty=${level}`,
+          onDone: () => Leaderboard.load('memory', document.getElementById('lb-container')),
+        });
       }
       function flip(index) {
         if (lock || completed || open.includes(index) || cardAt(index).classList.contains('matched')) return;
@@ -72,4 +80,5 @@
       $('play-again').addEventListener('click',() => { newGame(); $('reset').focus(); });
       $('victory').addEventListener('keydown',e => { if (e.key==='Tab') { e.preventDefault(); $('play-again').focus(); } });
       newGame();
+      Leaderboard.load('memory', document.getElementById('lb-container'));
     })();

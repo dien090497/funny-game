@@ -5,5 +5,20 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: PORT
-        value: 8080
+      - key: DATABASE_URL
+        fromDatabase:
+          name: funny-game-db
+          property: connectionString
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: funny-game-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: funny-game-db
+          property: password
+
+databases:
+  - name: funny-game-db
+    plan: free
+    databaseName: funnygame

@@ -8,6 +8,7 @@
   <title>2048 — Ghép số, phá kỷ lục</title>
   <link rel="stylesheet" th:href="@{/css/game2048.css}">
   <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
+  <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
 </head>
 <body>
   <nav class="game-hub-nav" aria-label="Điều hướng game">
@@ -32,6 +33,10 @@
           </div>
         </div>
         <div class="side-note">✦ Ván chơi và điểm cao được lưu tự động trên trình duyệt này.</div>
+        <div class="lb-section">
+          <h3>🏆 Bảng xếp hạng</h3>
+          <div id="lb-container"></div>
+        </div>
       </section>
       <section class="game" id="game" aria-label="Trò chơi 2048">
         <div class="game-top">
@@ -78,6 +83,7 @@
       <div class="modal-actions" id="modal-actions"></div>
     </div>
   </div>
+  <script th:src="@{/js/leaderboard.js}" defer></script>
   <script th:src="@{/js/game2048.js}" defer></script>
 </body>
 </html>

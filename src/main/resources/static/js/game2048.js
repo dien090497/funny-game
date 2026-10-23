@@ -175,9 +175,19 @@
       wonShown = true;
       save();
       showModal('win');
+      Leaderboard.promptAndSubmit({
+        game: '2048',
+        score,
+        onDone: () => Leaderboard.load('2048', document.getElementById('lb-container')),
+      });
     } else if (gameOver) {
       statusElement.textContent = 'Hết nước đi.';
       showModal('lose');
+      Leaderboard.promptAndSubmit({
+        game: '2048',
+        score,
+        onDone: () => Leaderboard.load('2048', document.getElementById('lb-container')),
+      });
     }
   }
 
@@ -249,4 +259,5 @@
   } else {
     newGame();
   }
+  Leaderboard.load('2048', document.getElementById('lb-container'));
 })();
