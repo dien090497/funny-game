@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}">
+<head>
+  <title>Xếp hạng tháng — Admin</title>
+</head>
+<body>
+<main>
+  <div class="admin-page-header">
+    <h1>Xếp hạng theo tháng</h1>
+    <p th:text="'Đang xem: ' + ${currentMonthLabel}">Tháng hiện tại</p>
+  </div>
+
+  <!-- Filter tháng -->
+  <form th:action="@{/admin/ranking}" method="get" class="ranking-filter">
+    <label for="month-input">Chọn tháng</label>
+    <input id="month-input" type="month" name="month"
+           th:value="${currentMonth}" min="2024-01"/>
+    <button type="submit">Xem</button>
+  </form>
+
+  <!-- Tổng kết tháng -->
+  <form th:action="@{/admin/summarize}" method="post" class="ranking-filter">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <label>Tổng kết và gửi thông báo cho tháng:</label>
+    <input type="month" name="month" th:value="${currentMonth}"/>
+    <button type="submit"
+            style="border-color:rgba(210,168,255,.35);background:rgba(210,168,255,.1);color:#d2a8ff"
+            onclick="return confirm('Xác nhận tổng kết và gửi thông báo?')">
+      📣 Tổng kết tháng
+    </button>
+  </form>
+
+  <!-- Grid 4 game -->
+  <div class="ranking-games">
+    <div th:each="entry : ${rankingByGame}" class="ranking-game-card">
+      <div class="card-head" th:text="${entry.key}">game</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Hạng</th>
+            <th>Người chơi</th>
+            <th>Điểm</th>
+            <th>Phần thưởng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="r : ${entry.value}">
+            <td>
+              <span th:if="${r.rank == 1}" class="rank-icon">🥇</span>
+              <span th:if="${r.rank == 2}" class="rank-icon">🥈</span>
+              <span th:if="${r.rank == 3}" class="rank-icon">🥉</span>
+              <span th:if="${r.rank > 3}"  th:text="${r.rank}">4</span>
+            </td>
+            <td th:text="${r.playerName}">player</td>
+            <td style="font-variant-numeric:tabular-nums;font-weight:600"
+                th:text="${#numbers.formatInteger(r.score, 0, 'COMMA')}">0</td>
+            <td>
+              <span th:if="${r.reward != null}" class="reward-pill"
+                    th:title="${r.reward.description}">
+                <span th:text="${r.reward.icon}">🏆</span>
+                <span th:text="${r.reward.title}">Phần thưởng</span>
+              </span>
+              <span th:if="${r.reward == null}" style="opacity:.3;font-size:.78rem">—</span>
+            </td>
+          </tr>
+          <tr th:if="${entry.value.empty}">
+            <td colspan="4" style="text-align:center;opacity:.35;padding:1.5rem;font-size:.83rem">
+              Chưa có lượt chơi nào trong tháng này.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+</body>
+</html>

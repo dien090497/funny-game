@@ -9,19 +9,21 @@
   <meta name="description" content="Chơi 2048 trên trình duyệt. Ghép các ô số, chinh phục 2048 và lưu tiến trình trên thiết bị.">
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <meta name="current-user" sec:authentication="name"/>
+  <meta name="current-user" th:content="${#authentication?.name}"/>
   <title>2048 — Ghép số, phá kỷ lục</title>
   <link rel="stylesheet" th:href="@{/css/game2048.css}">
   <link rel="stylesheet" th:href="@{/css/hub-nav.css}">
   <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
 </head>
 <body>
-  <nav class="game-hub-nav" aria-label="Điều hướng game"
-       xmlns:th="http://www.thymeleaf.org"
-       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <nav class="game-hub-nav" aria-label="Điều hướng game">
     <a th:href="@{/}">← Tất cả game</a>
     <div class="nav-right">
       <span class="nav-user" sec:authentication="name"></span>
+      <a th:href="@{/notifications}" class="nav-bell">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span th:if="${unreadCount > 0}" class="nav-bell-badge" th:text="${unreadCount}"></span>
+      </a>
       <form th:action="@{/logout}" method="post" style="display:inline;margin:0">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit" class="nav-logout">Đăng xuất</button>

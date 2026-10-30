@@ -16,6 +16,7 @@
       🎮 <span>Funny Game</span> Admin
     </div>
     <div class="admin-nav-actions">
+      <a th:href="@{/admin/rewards}">🏆 Phần thưởng</a>
       <a th:href="@{/}">← Về trang chơi</a>
       <form th:action="@{/logout}" method="post" style="display:inline">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -42,13 +43,11 @@
       </div>
       <div class="stat-card">
         <div class="stat-label">Player</div>
-        <div class="stat-value"
-             th:text="${users.stream().filter(u -> u.role.name() == 'PLAYER').count()}">0</div>
+        <div class="stat-value" th:text="${playerCount}">0</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Đang bị khoá</div>
-        <div class="stat-value"
-             th:text="${users.stream().filter(u -> !u.enabled).count()}">0</div>
+        <div class="stat-value" th:text="${lockedCount}">0</div>
       </div>
     </div>
 
@@ -77,7 +76,7 @@
               <span th:if="${u.enabled}" class="badge badge-player">Hoạt động</span>
               <span th:if="${!u.enabled}" class="badge badge-off">Bị khoá</span>
             </td>
-            <td th:text="${#temporals.format(u.createdAt, 'dd/MM/yyyy HH:mm')}">—</td>
+            <td th:text="${u.createdAt != null ? u.createdAt.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm')) : '—'}">—</td>
             <td>
               <div class="td-actions" th:if="${u.role.name() != 'ADMIN'}">
                 <form th:action="@{/admin/users/{id}/toggle(id=${u.id})}" method="post">

@@ -7,5 +7,7 @@
 
     <include file="db/changelog/001-create-scores.sql"/>
     <include file="db/changelog/002-create-users.sql"/>
+    <include file="db/changelog/003-create-rewards.sql"/>
+    <include file="db/changelog/004-notifications-claims.sql"/>
 
 </databaseChangeLog>

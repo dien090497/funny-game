@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Nhận thưởng — Admin</title></head>
+<body>
+<main>
+  <div class="admin-page-header">
+    <h1>Danh sách nhận thưởng</h1>
+    <p>Thông tin người chơi đã đăng ký nhận quà.</p>
+  </div>
+
+  <div class="admin-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tháng</th>
+          <th>Game</th>
+          <th>Hạng</th>
+          <th>Tên đăng nhập</th>
+          <th>Họ tên</th>
+          <th>SĐT</th>
+          <th>Địa chỉ</th>
+          <th>Tuổi</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="n : ${notifications}">
+          <td th:text="${n.month}">—</td>
+          <td><span class="badge badge-player" th:text="${n.game.toUpperCase()}"></span></td>
+          <td>
+            <span th:if="${n.rank == 1}">🥇</span>
+            <span th:if="${n.rank == 2}">🥈</span>
+            <span th:if="${n.rank == 3}">🥉</span>
+          </td>
+          <td th:text="${n.username}">—</td>
+          <td th:text="${n.claim != null ? n.claim.fullName : '—'}">—</td>
+          <td th:text="${n.claim != null ? n.claim.phone : '—'}">—</td>
+          <td th:text="${n.claim != null ? n.claim.address : '—'}">—</td>
+          <td th:text="${n.claim != null ? n.claim.age : '—'}">—</td>
+          <td>
+            <span th:if="${n.claim != null}" class="badge badge-player">Đã nhận</span>
+            <span th:if="${n.claim == null}" class="badge badge-off">Chưa nhận</span>
+          </td>
+        </tr>
+        <tr th:if="${notifications.empty}">
+          <td colspan="9" style="text-align:center;opacity:.4;padding:2rem">Chưa có thông báo nào.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

@@ -248,5 +248,5 @@
 
   if (load()) { update(); save(); }
   else reset();
-  Leaderboard.load('snake', document.getElementById('lb-container'));
+  Leaderboard.init('snake', document.getElementById('lb-container'));
 })();

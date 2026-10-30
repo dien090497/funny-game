@@ -80,5 +80,5 @@
       $('play-again').addEventListener('click',() => { newGame(); $('reset').focus(); });
       $('victory').addEventListener('keydown',e => { if (e.key==='Tab') { e.preventDefault(); $('play-again').focus(); } });
       newGame();
-      Leaderboard.load('memory', document.getElementById('lb-container'));
+      Leaderboard.init('memory', document.getElementById('lb-container'));
     })();

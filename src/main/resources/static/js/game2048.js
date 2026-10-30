@@ -259,5 +259,5 @@
   } else {
     newGame();
   }
-  Leaderboard.load('2048', document.getElementById('lb-container'));
+  Leaderboard.init('2048', document.getElementById('lb-container'));
 })();

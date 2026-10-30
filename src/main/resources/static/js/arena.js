@@ -305,5 +305,5 @@
   stick.addEventListener('pointerup',releaseStick);stick.addEventListener('pointercancel',releaseStick);
 
   read();menu();requestAnimationFrame(frame);
-  Leaderboard.load('arena', document.getElementById('lb-container'));
+  Leaderboard.init('arena', document.getElementById('lb-container'));
 })();

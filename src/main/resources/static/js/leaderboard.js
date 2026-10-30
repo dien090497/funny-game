@@ -1,84 +1,162 @@
 /**
  * leaderboard.js — tiện ích dùng chung cho tất cả game
- * Yêu cầu: user đã đăng nhập (Spring Security session)
  *
- * Cách dùng:
- *   Leaderboard.submit({ game, score, extra })  → gửi điểm lên server
- *   Leaderboard.load(game, containerEl)          → render top 10 vào element
- *   Leaderboard.submitAndRefresh({ game, score, extra, containerEl }) → gửi rồi reload bảng
+ * API:
+ *   Leaderboard.init(game, containerEl)
+ *     → render widget đầy đủ với 2 tab: "Tháng này" + "Tất cả thời gian"
+ *
+ *   Leaderboard.submitAndRefresh({ game, score, extra, containerEl })
+ *     → gửi điểm rồi reload tab đang active
  */
 const Leaderboard = (() => {
   'use strict';
 
   const API = '/api/scores';
 
-  // ── Lấy username hiện tại từ meta tag inject bởi server ────────────────────
   function currentUser() {
     return document.querySelector('meta[name="current-user"]')?.content || '';
   }
 
-  // ── submit ──────────────────────────────────────────────────────────────────
+  function currentMonth() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function monthLabel() {
+    return new Date().toLocaleDateString('vi-VN', { month: 'long', year: 'numeric' });
+  }
+
+  // ── CSRF ─────────────────────────────────────────────────────────────────────
+  function csrfHeaders() {
+    const token  = document.querySelector('meta[name="_csrf"]')?.content;
+    const header = document.querySelector('meta[name="_csrf_header"]')?.content;
+    const h = { 'Content-Type': 'application/json' };
+    if (token && header) h[header] = token;
+    return h;
+  }
+
+  // ── Submit điểm ──────────────────────────────────────────────────────────────
   async function submit({ game, score, extra = null }) {
     try {
-      const csrf = document.querySelector('meta[name="_csrf"]')?.content;
-      const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.content;
-      const headers = { 'Content-Type': 'application/json' };
-      if (csrf && csrfHeader) headers[csrfHeader] = csrf;
-
       await fetch(API, {
         method: 'POST',
-        headers,
+        headers: csrfHeaders(),
         body: JSON.stringify({ game, score, extra }),
       });
-    } catch { /* im lặng nếu offline */ }
+    } catch { /* offline — im lặng */ }
   }
 
-  // ── load & render ────────────────────────────────────────────────────────────
-  async function load(game, containerEl) {
-    if (!containerEl) return;
-    containerEl.innerHTML = '<p class="lb-loading">Đang tải…</p>';
-    try {
-      const res = await fetch(`${API}/${game}`);
-      if (!res.ok) throw new Error();
-      const rows = await res.json();
-      render(rows, containerEl);
-    } catch {
-      containerEl.innerHTML = '<p class="lb-error">Không tải được bảng xếp hạng.</p>';
-    }
+  // ── Fetch data ────────────────────────────────────────────────────────────────
+  async function fetchAll(game) {
+    const res = await fetch(`${API}/${game}`);
+    if (!res.ok) throw new Error();
+    return res.json();
   }
 
-  function render(rows, el) {
-    if (!rows.length) {
-      el.innerHTML = '<p class="lb-empty">Chưa có điểm nào. Hãy là người đầu tiên!</p>';
-      return;
-    }
+  async function fetchMonthly(game, month) {
+    const res = await fetch(`${API}/${game}/monthly?month=${month}`);
+    if (!res.ok) throw new Error();
+    return res.json();
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────────
+  function renderRows(rows, isMonthly) {
+    if (!rows.length) return '<p class="lb-empty">Chưa có điểm nào trong kỳ này.</p>';
     const medals = ['🥇', '🥈', '🥉'];
     const me = currentUser();
-    el.innerHTML = `
-      <ol class="lb-list">
-        ${rows.map((r, i) => `
-          <li class="lb-row${r.playerName === me ? ' lb-me' : ''}">
-            <span class="lb-rank">${medals[i] ?? i + 1}</span>
-            <span class="lb-name">${escHtml(r.playerName)}</span>
-            <span class="lb-score">${r.score.toLocaleString('vi-VN')}</span>
-            ${r.extra ? `<span class="lb-extra">${escHtml(r.extra)}</span>` : ''}
-          </li>`).join('')}
-      </ol>`;
+    return `<ol class="lb-list">
+      ${rows.map((r, i) => {
+        const rank   = isMonthly ? r.rank  : i + 1;
+        const name   = escHtml(isMonthly ? r.playerName : r.playerName);
+        const score  = (isMonthly ? r.score : r.score).toLocaleString('vi-VN');
+        const extra  = isMonthly ? r.extra : r.extra;
+        const reward = isMonthly ? r.reward : null;
+        const isMe   = (isMonthly ? r.playerName : r.playerName) === me;
+        return `<li class="lb-row${isMe ? ' lb-me' : ''}${reward ? ' lb-has-reward' : ''}">
+          <span class="lb-rank">${medals[rank - 1] ?? rank}</span>
+          <span class="lb-name">${name}</span>
+          <span class="lb-score">${score}</span>
+          ${extra ? `<span class="lb-extra">${escHtml(extra)}</span>` : ''}
+          ${reward ? `<span class="lb-reward" title="${escHtml(reward.description || '')}">
+            ${escHtml(reward.icon)} <span>${escHtml(reward.title)}</span>
+          </span>` : ''}
+        </li>`;
+      }).join('')}
+    </ol>`;
   }
 
-  // ── submit + tự reload bảng ──────────────────────────────────────────────────
+  // ── Widget với 2 tab ──────────────────────────────────────────────────────────
+  function init(game, containerEl) {
+    if (!containerEl) return;
+
+    containerEl.innerHTML = `
+      <div class="lb-tabs">
+        <button class="lb-tab lb-tab-active" data-tab="monthly">
+          📅 ${monthLabel()}
+        </button>
+        <button class="lb-tab" data-tab="all">Tất cả thời gian</button>
+      </div>
+      <div class="lb-body" data-loading="true">
+        <p class="lb-loading">Đang tải…</p>
+      </div>`;
+
+    const body = containerEl.querySelector('.lb-body');
+
+    async function loadTab(tab) {
+      body.innerHTML = '<p class="lb-loading">Đang tải…</p>';
+      try {
+        if (tab === 'monthly') {
+          const rows = await fetchMonthly(game, currentMonth());
+          body.innerHTML = renderRows(rows, true);
+        } else {
+          const rows = await fetchAll(game);
+          body.innerHTML = renderRows(rows, false);
+        }
+      } catch {
+        body.innerHTML = '<p class="lb-error">Không tải được bảng xếp hạng.</p>';
+      }
+    }
+
+    containerEl.querySelectorAll('.lb-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        containerEl.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('lb-tab-active'));
+        btn.classList.add('lb-tab-active');
+        loadTab(btn.dataset.tab);
+      });
+    });
+
+    // Load tab mặc định là "monthly"
+    loadTab('monthly');
+  }
+
+  // ── Submit + refresh tab đang active ─────────────────────────────────────────
   async function submitAndRefresh({ game, score, extra = null, containerEl }) {
     await submit({ game, score, extra });
-    if (containerEl) await load(game, containerEl);
+    if (!containerEl) return;
+    const activeTab = containerEl.querySelector('.lb-tab-active')?.dataset?.tab ?? 'monthly';
+    const body = containerEl.querySelector('.lb-body');
+    if (!body) { init(game, containerEl); return; }
+    body.innerHTML = '<p class="lb-loading">Đang tải…</p>';
+    try {
+      if (activeTab === 'monthly') {
+        const rows = await fetchMonthly(game, currentMonth());
+        body.innerHTML = renderRows(rows, true);
+      } else {
+        const rows = await fetchAll(game);
+        body.innerHTML = renderRows(rows, false);
+      }
+    } catch {
+      body.innerHTML = '<p class="lb-error">Không tải được bảng xếp hạng.</p>';
+    }
   }
 
   function escHtml(str) {
-    return String(str)
+    return String(str ?? '')
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   }
 
-  return { submit, load, submitAndRefresh };
+  return { init, submit, submitAndRefresh };
 })();
