@@ -50,11 +50,11 @@
         $('victory').hidden=false; $('play-again').focus();
         // score = số lượt đảo ngược để dễ so sánh (ít lượt hơn = tốt hơn → dùng 10000 - moves)
         const leaderboardScore = Math.max(0, 10000 - moves * 10 - elapsed);
-        Leaderboard.promptAndSubmit({
+        Leaderboard.submitAndRefresh({
           game: 'memory',
           score: leaderboardScore,
           extra: `moves=${moves},time=${elapsed},difficulty=${level}`,
-          onDone: () => Leaderboard.load('memory', document.getElementById('lb-container')),
+          containerEl: document.getElementById('lb-container'),
         });
       }
       function flip(index) {

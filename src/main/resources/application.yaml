@@ -1,11 +1,15 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+
 spring:
   application:
     name: funny-game
 
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://ep-late-field-b5rdwpj7-pooler.c-7.us-east-2.aws.neon.tech:5432/neondb?currentSchema=funny_game}
-    username: ${DATABASE_USERNAME:neondb_owner}
-    password: ${DATABASE_PASSWORD:npg_yMZHmxi26lOT}
+    url: ${DATABASE_URL:jdbc:postgresql://funny-game.c5q8a8aigbg4.ap-southeast-1.rds.amazonaws.com:5432/postgres?currentSchema=funny_game}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:aA1!asdasd}
     driver-class-name: org.postgresql.Driver
 
   jpa:

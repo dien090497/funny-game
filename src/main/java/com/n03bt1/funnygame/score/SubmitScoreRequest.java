@@ -5,4 +5,8 @@ public record SubmitScoreRequest(
         String game,
         Long score,
         String extra   // nullable
-) {}
+) {
+    public SubmitScoreRequest withPlayerName(String name) {
+        return new SubmitScoreRequest(name, game, score, extra);
+    }
+}

@@ -111,10 +111,10 @@
     update();
     save();
     if (finalState === 'over' || finalState === 'won') {
-      Leaderboard.promptAndSubmit({
+    Leaderboard.submitAndRefresh({
         game: 'snake',
         score,
-        onDone: () => Leaderboard.load('snake', document.getElementById('lb-container')),
+        containerEl: document.getElementById('lb-container'),
       });
     }
   }

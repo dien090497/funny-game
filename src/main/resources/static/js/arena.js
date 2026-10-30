@@ -94,11 +94,11 @@
     store(); updateHud();
     screen(`<div class="screen-icon">${win?'★':'✕'}</div><h3>${win?'Bạn đã sống sót!':'Ánh sáng đã tắt'}</h3><p>${win?'Bạn trụ vững đủ 3 phút.':'Thử một cách kết hợp vũ khí khác ở ván tiếp theo.'}<br>Thời gian: <b>${timeText(game.time)}</b> · Hạ gục: <b>${game.kills}</b> · Cấp: <b>${game.level}</b></p><button type="button" class="primary" id="again">Chơi ván mới →</button>`);
     $('again').addEventListener('click',newGame);
-    Leaderboard.promptAndSubmit({
+    Leaderboard.submitAndRefresh({
       game: 'arena',
       score: game.kills,
       extra: `time=${Math.floor(game.time)},level=${game.level},win=${win?1:0}`,
-      onDone: () => Leaderboard.load('arena', document.getElementById('lb-container')),
+      containerEl: document.getElementById('lb-container'),
     });
   }
 

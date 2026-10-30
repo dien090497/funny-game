@@ -6,5 +6,6 @@
                             https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="db/changelog/001-create-scores.sql"/>
+    <include file="db/changelog/002-create-users.sql"/>
 
 </databaseChangeLog>

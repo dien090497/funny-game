@@ -1,0 +1,75 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100dvh;
+  background: #0d1117;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #e6edf3;
+}
+
+.admin-layout { display: flex; flex-direction: column; min-height: 100dvh; }
+
+/* ── Top nav ── */
+.admin-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .75rem 1.5rem;
+  background: #161b22;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  gap: 1rem; flex-wrap: wrap;
+}
+.admin-nav .brand { font-weight: 700; font-size: 1rem; letter-spacing: -.01em; display: flex; align-items: center; gap: .5rem; }
+.admin-nav .brand span { opacity: .4; font-weight: 400; }
+.admin-nav-actions { display: flex; gap: .6rem; align-items: center; font-size: .85rem; }
+.admin-nav-actions a, .admin-nav-actions button {
+  padding: .4rem .85rem; border-radius: 7px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05); color: inherit;
+  text-decoration: none; font-size: .82rem; cursor: pointer;
+}
+.admin-nav-actions a:hover, .admin-nav-actions button:hover { background: rgba(255,255,255,.1); }
+
+/* ── Content ── */
+.admin-content { padding: 1.75rem 1.5rem; max-width: 960px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
+
+.admin-header h1 { font-size: 1.4rem; font-weight: 700; }
+.admin-header p  { font-size: .85rem; opacity: .45; margin-top: .25rem; }
+
+.admin-alert {
+  padding: .7rem 1rem; border-radius: 8px; font-size: .85rem;
+}
+.admin-alert.error   { background: rgba(248,81,73,.12); border: 1px solid rgba(248,81,73,.3); color: #ff7b72; }
+.admin-alert.success { background: rgba(63,185,80,.12); border: 1px solid rgba(63,185,80,.3); color: #56d364; }
+
+/* ── Table ── */
+.admin-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); }
+table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+thead { background: rgba(255,255,255,.04); }
+th { padding: .65rem 1rem; text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; opacity: .5; white-space: nowrap; }
+td { padding: .65rem 1rem; border-top: 1px solid rgba(255,255,255,.05); vertical-align: middle; }
+tr:hover td { background: rgba(255,255,255,.02); }
+
+.badge {
+  display: inline-flex; align-items: center;
+  padding: .2rem .55rem; border-radius: 20px; font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+}
+.badge-admin  { background: rgba(210,168,255,.15); color: #d2a8ff; }
+.badge-player { background: rgba(86,211,100,.12); color: #56d364; }
+.badge-off    { background: rgba(248,81,73,.12); color: #ff7b72; }
+
+.td-actions { display: flex; gap: .4rem; }
+.btn-sm {
+  padding: .3rem .7rem; border-radius: 6px; font-size: .78rem; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: inherit;
+}
+.btn-sm:hover { background: rgba(255,255,255,.12); }
+.btn-sm.danger { border-color: rgba(248,81,73,.3); color: #ff7b72; }
+.btn-sm.danger:hover { background: rgba(248,81,73,.12); }
+
+.stats-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.stat-card {
+  flex: 1; min-width: 130px;
+  padding: 1rem 1.25rem;
+  background: #161b22; border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
+}
+.stat-card .stat-label { font-size: .72rem; opacity: .45; text-transform: uppercase; letter-spacing: .06em; }
+.stat-card .stat-value { font-size: 1.75rem; font-weight: 700; margin-top: .2rem; }
